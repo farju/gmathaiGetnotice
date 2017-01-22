@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="bright_yellow">#FEF026</color>
+    <color name="bright_teal">#22F9A7</color>
+    <color name="bright_light_brown">#F3E7D0</color>
+    <color name="bright_brown">#D44317</color>
+    <color name="bright_leaf_green">#C1DE38</color>
+    <color name="bright_pink">#DB089D</color>
+    <color name="bright_orange">#F89615</color>
+    <color name="bright_white">#FFFFFF</color>
+    <color name="bright_purple">#A444C2</color>
+    <color name="bright_red">#EE111F</color>
+
+    <array name="bright_colors">
+        <item>@color/bright_yellow</item>
+        <item>@color/bright_teal</item>
+        <item>@color/bright_light_brown</item>
+        <item>@color/bright_brown</item>
+        <item>@color/bright_leaf_green</item>
+        <item>@color/bright_pink</item>
+        <item>@color/bright_orange</item>
+        <item>@color/bright_white</item>
+        <item>@color/bright_purple</item>
+        <item>@color/bright_red</item>
+
+
+    </array>
+
+</resources>

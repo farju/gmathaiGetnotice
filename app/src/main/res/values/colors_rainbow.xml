@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="rainbow_red">#FE0000</color>
+    <color name="rainbow_orange">#FF9C00</color>
+    <color name="rainbow_yellow">#F5FF00</color>
+    <color name="rainbow_green">#3CF10E</color>
+    <color name="rainbow_teal">#01FFE5</color>
+    <color name="rainbow_blue">#0024FF</color>
+    <color name="rainbow_purple">#C500FF</color>
+    <color name="rainbow_pink">#FF009C</color>
+    
+    <array name="rainbow_colors">
+        <item>@color/rainbow_red</item>
+        <item>@color/rainbow_orange</item>
+        <item>@color/rainbow_yellow</item>
+        <item>@color/rainbow_green</item>
+        <item>@color/rainbow_teal</item>
+        <item>@color/rainbow_blue</item>
+        <item>@color/rainbow_purple</item>
+        <item>@color/rainbow_pink</item>
+    </array>
+    
+    
+</resources>
