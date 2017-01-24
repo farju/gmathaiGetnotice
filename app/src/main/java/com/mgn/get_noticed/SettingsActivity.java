@@ -1,4 +1,4 @@
-package com.mgn.getnoticed;
+package com.mgn.get_noticed;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -39,11 +39,13 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1)
+                finish();
+            else
+                getSupportFragmentManager().popBackStackImmediate();
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

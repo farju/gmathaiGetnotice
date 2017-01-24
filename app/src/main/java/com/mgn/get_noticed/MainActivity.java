@@ -1,4 +1,4 @@
-package com.mgn.getnoticed;
+package com.mgn.get_noticed;
 
 import android.content.Intent;
 import android.os.Bundle;
