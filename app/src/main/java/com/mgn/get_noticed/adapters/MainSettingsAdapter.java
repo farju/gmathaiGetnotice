@@ -4,21 +4,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.mgn.get_noticed.R;
 
-/**
- * Created by a6001899 on 1/24/17.
- */
-
-public class MainSettingsRVAdapter extends RecyclerView.Adapter<MainSettingsRVAdapter.ViewHolder> {
+public class MainSettingsAdapter extends BaseAdapter {
 
 
     private final String[] mTitles;
     private final String[] mSubtitles;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+       public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTitleTextView;
         private TextView mSubtitleTextView;
@@ -43,25 +40,41 @@ public class MainSettingsRVAdapter extends RecyclerView.Adapter<MainSettingsRVAd
         }
     }
 
-    public MainSettingsRVAdapter(String[] titles, String[] subtitles) {
+    public MainSettingsAdapter(String[] titles, String[] subtitles) {
         mTitles = titles;
         mSubtitles = subtitles;
     }
 
-
     @Override
-    public MainSettingsRVAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cell_main_settings, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(MainSettingsRVAdapter.ViewHolder holder, int position) {
-        holder.setText(mTitles[position], mSubtitles[position]);
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return mTitles.length;
     }
+
+    @Override
+    public String getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder vh;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cell_main_settings, parent, false);
+            vh = new ViewHolder(convertView);
+            convertView.setTag(vh);
+        } else {
+            vh = (ViewHolder) convertView.getTag();
+        }
+
+        vh.setText(mTitles[position], mSubtitles[position]);
+        return convertView;
+    }
+
+
 }

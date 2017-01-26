@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mgn.get_noticed.fragments.ColorPalettesFragment"
+    tools:showIn="@layout/activity_settings">
+
+    <TextView
+        android:id="@+id/colorPalettes_headerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/yellow"
+        android:gravity="center_vertical|start"
+        android:padding="8dp"
+        android:text="@string/color_palette_header_text"
+        android:textColor="@color/DarkSlateGray"
+        android:textSize="17sp" />
+
+    <ListView
+        android:id="@+id/colorPalettes_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/colorPalettes_headerTextView"
+        android:choiceMode="singleChoice" />
+
+
+</RelativeLayout>

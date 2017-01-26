@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:orientation="vertical"
     android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/cell_mainSettings_cellIndicator"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:tint="@color/SlateGray"
+        app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
 
     <TextView
         android:id="@+id/cell_mainSettings_titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/cell_mainSettings_cellIndicator"
+        android:layout_toStartOf="@id/cell_mainSettings_cellIndicator"
         android:gravity="center_vertical|start"
         android:textColor="@color/DarkSlateGray"
         android:textSize="21sp"
@@ -18,8 +33,12 @@
     <TextView
         android:id="@+id/cell_mainSettings_subtitleTextView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/cell_mainSettings_titleTextView"
+        android:layout_toLeftOf="@id/cell_mainSettings_cellIndicator"
+        android:layout_toStartOf="@id/cell_mainSettings_cellIndicator"
         android:ellipsize="end"
         android:gravity="center_vertical|start"
         android:textColor="@color/LightSlateGray"
@@ -27,4 +46,4 @@
         tools:text="Just some random text / Just some random text / Just some random text / Just some random text \n" />
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,13 +1,19 @@
-package com.mgn.get_noticed;
+package com.mgn.get_noticed.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.mgn.get_noticed.R;
+import com.mgn.get_noticed.fragments.MainSettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -33,7 +39,20 @@ public class SettingsActivity extends AppCompatActivity {
             //actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         }
 
+        loadMainSettingsFragment();
+    }
 
+    private void loadMainSettingsFragment() {
+        replaceFragment(new MainSettingsFragment());
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        String tag = fragment.getClass().getSimpleName();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment, tag);
+        ft.addToBackStack(tag);
+        ft.commitAllowingStateLoss();
     }
 
     @Override
