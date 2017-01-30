@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.mgn.get_noticed.GetNoticedApplication;
 import com.mgn.get_noticed.R;
+import com.mgn.get_noticed.util.Constants;
 
 public class MainSettingsAdapter extends BaseAdapter {
 
@@ -15,15 +17,18 @@ public class MainSettingsAdapter extends BaseAdapter {
     private final String[] mTitles;
     private final String[] mSubtitles;
 
-       public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTitleTextView;
         private TextView mSubtitleTextView;
+        private TextView mValueTextView;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTitleTextView = (TextView) itemView.findViewById(R.id.cell_mainSettings_titleTextView);
             mSubtitleTextView = (TextView) itemView.findViewById(R.id.cell_mainSettings_subtitleTextView);
+            mValueTextView = (TextView) itemView.findViewById(R.id.cell_mainSettings_valueTextView);
         }
 
 //        public void setTitle(String text) {
@@ -37,6 +42,7 @@ public class MainSettingsAdapter extends BaseAdapter {
         public void setText(String title, String subtitle) {
             this.mTitleTextView.setText(title);
             this.mSubtitleTextView.setText(subtitle);
+            this.mValueTextView.setVisibility(View.GONE);
         }
     }
 
@@ -73,6 +79,16 @@ public class MainSettingsAdapter extends BaseAdapter {
         }
 
         vh.setText(mTitles[position], mSubtitles[position]);
+
+        switch (position) {
+            case 1:
+                String text = GetNoticedApplication.getInstance().getSharedPreferences().getString(Constants.DISPLAY_TEXT, "");
+                text = "Current Text: " + text;
+                vh.mValueTextView.setText(text);
+                vh.mValueTextView.setVisibility(View.VISIBLE);
+                break;
+        }
+
         return convertView;
     }
 

@@ -15,7 +15,9 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mgn.get_noticed.GetNoticedApplication;
 import com.mgn.get_noticed.R;
+import com.mgn.get_noticed.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements Animation.AnimationListener, View.OnClickListener {
 
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
             mContentView.setBackgroundColor(mColorValuesArray[colorCounter]);
             //mDisplayTextView.setTextColor(Util.getComplementaryColor(mColorValuesArray[colorCounter]));
             ++colorCounter;
-            if (colorCounter == mColorValuesArray.length)
+            if (colorCounter >= mColorValuesArray.length)
                 colorCounter = 0;
             if (mRunning)
                 changeColor();
@@ -192,6 +194,14 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         mColorChangeHandler.postDelayed(mChangeColorRunnable, COLOR_CHANGE_DELAY);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int colorsArray = GetNoticedApplication.getInstance().getSharedPreferences().getInt(Constants.SELECTED_COLOR_ARRAY, -100);
+        if (colorsArray != -100)
+            mColorValuesArray = getResources().getIntArray(colorsArray);
+        mDisplayTextView.setText(GetNoticedApplication.getInstance().getSharedPreferences().getString(Constants.DISPLAY_TEXT, ""));
+    }
 
     @Override
     public void onClick(View view) {

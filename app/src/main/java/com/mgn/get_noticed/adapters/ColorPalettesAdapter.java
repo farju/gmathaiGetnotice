@@ -20,7 +20,7 @@ public class ColorPalettesAdapter extends BaseAdapter {
     private String[] mTitles;
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    private static class ViewHolder extends RecyclerView.ViewHolder {
 
         private CheckBox mCheckBox;
         private TextView mTitleTextView;
@@ -43,7 +43,7 @@ public class ColorPalettesAdapter extends BaseAdapter {
         }
 
 
-        public void setCheckBox(CompoundButton.OnCheckedChangeListener onCheckedChangeListener, int position) {
+        private void setCheckBox(CompoundButton.OnCheckedChangeListener onCheckedChangeListener, int position) {
             mCheckBox.setOnCheckedChangeListener(onCheckedChangeListener);
             mCheckBox.setTag(position);
         }

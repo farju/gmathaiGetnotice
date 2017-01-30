@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
+    android:minHeight="10dp"
     android:padding="16dp">
 
     <ImageView
@@ -14,7 +16,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:tint="@color/SlateGray"
-        app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
+        app:srcCompat="@drawable/ic_chevron_right_black_24dp"/>
 
     <TextView
         android:id="@+id/cell_mainSettings_titleTextView"
@@ -28,7 +30,7 @@
         android:gravity="center_vertical|start"
         android:textColor="@color/DarkSlateGray"
         android:textSize="21sp"
-        tools:text="Color Palette" />
+        tools:text="Color Palette"/>
 
     <TextView
         android:id="@+id/cell_mainSettings_subtitleTextView"
@@ -43,7 +45,25 @@
         android:gravity="center_vertical|start"
         android:textColor="@color/LightSlateGray"
         android:textSize="14sp"
-        tools:text="Just some random text / Just some random text / Just some random text / Just some random text \n" />
+        tools:text="Just some random text / Just some random text / Just some random text / Just some random text \n"/>
+
+    <TextView
+        android:id="@+id/cell_mainSettings_valueTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/cell_mainSettings_subtitleTextView"
+        android:layout_toLeftOf="@id/cell_mainSettings_cellIndicator"
+        android:layout_toStartOf="@id/cell_mainSettings_cellIndicator"
+        android:ellipsize="end"
+        android:gravity="center_vertical|start"
+        android:textStyle="bold|italic"
+        android:textColor="@color/LightSlateGray"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="Just some random value / Just some random value / Just some random value / Just some random value \n"/>
 
 
 </RelativeLayout>

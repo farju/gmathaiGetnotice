@@ -1,27 +1,40 @@
 package com.mgn.get_noticed.fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import com.mgn.get_noticed.GetNoticedApplication;
 import com.mgn.get_noticed.R;
 import com.mgn.get_noticed.activities.SettingsActivity;
 import com.mgn.get_noticed.adapters.MainSettingsAdapter;
+import com.mgn.get_noticed.util.Constants;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainSettingsFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
-    private static final String[] TITLES = {"Color Palettes"};
-    private static final String[] SUBTITLES = {"Select from different color palettes to show on the main screen"};
+    private static final String[] TITLES = {"Color Palettes", "Display Text"};
+    private static final String[] SUBTITLES =
+            {"Select from different color palettes to #getNoticed",
+                    "Update the display text to #getNoticed",
+            };
 
     private ListView mListView;
+    private MainSettingsAdapter mAdapter;
+
 
     public MainSettingsFragment() {
     }
@@ -43,8 +56,8 @@ public class MainSettingsFragment extends BaseFragment implements AdapterView.On
         super.onActivityCreated(savedInstanceState);
         Activity activity = getActivity();
         if (activity != null) {
-            MainSettingsAdapter adapter = new MainSettingsAdapter(TITLES, SUBTITLES);
-            mListView.setAdapter(adapter);
+            mAdapter = new MainSettingsAdapter(TITLES, SUBTITLES);
+            mListView.setAdapter(mAdapter);
             mListView.setOnItemClickListener(this);
         }
     }
@@ -57,6 +70,39 @@ public class MainSettingsFragment extends BaseFragment implements AdapterView.On
                 if (activity != null) {
                     activity.replaceFragment(new ColorPalettesFragment());
                 }
+                break;
+            case 1:
+                if (activity != null) {
+                    showInputDialog(activity);
+                }
+                break;
         }
+    }
+
+    private void showInputDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Enter Display Text");
+
+        final EditText input = new EditText(context);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences.Editor editor = GetNoticedApplication.getInstance().getSharedPreferences().edit();
+                editor.putString(Constants.DISPLAY_TEXT, input.getText().toString());
+                editor.apply();
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
