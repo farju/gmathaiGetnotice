@@ -1,4 +1,4 @@
-package com.mgn.getnoticed;
+package com.mgn.get_noticed.util;
 
 import android.graphics.Color;
 

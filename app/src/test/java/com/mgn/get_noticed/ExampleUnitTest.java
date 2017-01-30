@@ -1,4 +1,4 @@
-package com.mgn.getnoticed;
+package com.mgn.get_noticed;
 
 import org.junit.Test;
 
