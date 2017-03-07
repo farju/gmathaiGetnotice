@@ -1,4 +1,4 @@
-package com.mgn.getnoticed;
+package com.mgn.get_noticed;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

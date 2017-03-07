@@ -169,7 +169,7 @@
     <color name="YellowGreen">#9ACD32</color>
 
 
-    <array name="colorNameList">
+    <array name="allColorNames156">
         <item>AliceBlue</item>
         <item>AntiqueWhite</item>
         <item>Aqua</item>
@@ -312,7 +312,7 @@
         <item>YellowGreen</item>
     </array>
 
-    <array name="colorValueList">
+    <array name="allColorValues156">
         <item>@color/AliceBlue</item>
         <item>@color/AntiqueWhite</item>
         <item>@color/Aqua</item>
