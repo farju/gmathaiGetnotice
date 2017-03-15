@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="#0099cc"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
              tools:context="com.mgn.get_noticed.activities.MainActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -36,44 +36,49 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <HorizontalScrollView
+        <LinearLayout
             android:id="@+id/fullscreen_content_controls"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="8dp"
             android:background="@color/black_overlay"
-            android:scrollbarAlwaysDrawHorizontalTrack="true">
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="3">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:baselineAligned="false"
-                android:padding="10dp"
-                android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/fullscreen_content_controls_play"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"/>
 
-                <ImageView
-                    android:id="@+id/fullscreen_content_controls_play"
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_invert_colors_white_24px"/>
+            <ImageView
+                android:id="@+id/fullscreen_content_controls_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_speaker_notes_off_white_24px"/>
 
-                <ImageView
-                    android:id="@+id/fullscreen_content_controls_text"
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_speaker_notes_off_white_24px"/>
+            <ImageView
+                android:id="@+id/fullscreen_content_controls_settings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_settings_white_24px"/>
 
-                <ImageView
-                    android:id="@+id/fullscreen_content_controls_settings"
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_settings_white_24px"/>
-
-            </LinearLayout>
-        </HorizontalScrollView>
+        </LinearLayout>
 
     </FrameLayout>
 

@@ -33,4 +33,5 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.1'
 
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
 }

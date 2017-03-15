@@ -11,8 +11,8 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mgn.get_noticed.GetNoticedApplication;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
 
     private View mContentView;
     private TextView mDisplayTextView;
-    private HorizontalScrollView mControlsView;
+    private LinearLayout mQuickAccessMenu;
 
     static int colorCounter = 0;
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            hide();
+            toggleQuickAccessMenu(false);
         }
     };
 
@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     private Animation mFadeInAnimation;
     private Animation mFadeOutAnimation;
     private int[] mColorValuesArray;
-    ImageView playControlsImageView;
 
 
     @Override
@@ -79,36 +78,46 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mVisible = true;
-        mRunning = true;
+        initializeValues();             // Initializes the value objects
+        initializeViews();              // Initializes the view objects
+        initializeAnimations();         // Initializes the animations for fade in/out of the quick access menu
+        changeColor();                  // Starts the color changing
+        //animateColorChanges(false);     //
+    }
 
-        mControlsView = (HorizontalScrollView) findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-        mDisplayTextView = (TextView) findViewById(R.id.display_text);
-        playControlsImageView = (ImageView) findViewById(R.id.fullscreen_content_controls_play);
-        playControlsImageView.setTag("PlayControls");
-        playControlsImageView.setOnClickListener(this);
-
-        ImageView settingsImageView = (ImageView) findViewById(R.id.fullscreen_content_controls_settings);
-        settingsImageView.setTag("Settings");
-        settingsImageView.setOnClickListener(this);
-
-        hideUI();
-        initializeAnimations();
-
+    private void initializeValues() {
+        mVisible = false;
+        mRunning = false;
         mColorValuesArray = getResources().getIntArray(R.array.rainbow_colors);
-        changeColor();
+    }
 
+    private void initializeViews() {
+        mQuickAccessMenu = (LinearLayout) findViewById(R.id.fullscreen_content_controls);
+        mDisplayTextView = (TextView) findViewById(R.id.display_text);
+
+        mContentView = findViewById(R.id.fullscreen_content);
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggle();
+                toggleQuickAccessMenu(!mVisible);
             }
         });
         mContentView.setOnTouchListener(mDelayHideTouchListener);
 
-        animateColorChanges(false);
+
+        ImageView playImageView = (ImageView) findViewById(R.id.fullscreen_content_controls_play);
+        playImageView.setTag(Constants.QUICK_ACCESS_MENU_PLAY);
+        playImageView.setOnClickListener(this);
+
+        ImageView textImageView = (ImageView) findViewById(R.id.fullscreen_content_controls_text);
+        textImageView.setTag(Constants.QUICK_ACCESS_MENU_TEXT);
+        textImageView.setOnClickListener(this);
+
+        ImageView settingsImageView = (ImageView) findViewById(R.id.fullscreen_content_controls_settings);
+        settingsImageView.setTag(Constants.QUICK_ACCESS_MENU_SETTINGS);
+        settingsImageView.setOnClickListener(this);
     }
+
 
     private void hideUI() {
         ActionBar actionBar = getSupportActionBar();
@@ -145,22 +154,13 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         delayedHide(100);
     }
 
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
+    private void toggleQuickAccessMenu(boolean isVisible) {
+        mVisible = isVisible;
+        if (mVisible)
+            mQuickAccessMenu.startAnimation(mFadeInAnimation);
+        else
+            mQuickAccessMenu.startAnimation(mFadeOutAnimation);
 
-    private void hide() {
-        mControlsView.startAnimation(mFadeOutAnimation);
-        mVisible = false;
-    }
-
-    private void show() {
-        mVisible = true;
-        mControlsView.startAnimation(mFadeInAnimation);
     }
 
     /**
@@ -179,9 +179,9 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     @Override
     public void onAnimationEnd(Animation animation) {
         if (animation.equals(mFadeInAnimation)) {
-            mControlsView.setVisibility(View.VISIBLE);
+            mQuickAccessMenu.setVisibility(View.VISIBLE);
         } else if (animation.equals(mFadeOutAnimation)) {
-            mControlsView.setVisibility(View.INVISIBLE);
+            mQuickAccessMenu.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -197,6 +197,8 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     @Override
     protected void onResume() {
         super.onResume();
+        // Hides the quick access menu
+        hideUI();
         int colorsArray = GetNoticedApplication.getInstance().getSharedPreferences().getInt(Constants.SELECTED_COLOR_ARRAY, -100);
         if (colorsArray != -100)
             mColorValuesArray = getResources().getIntArray(colorsArray);
@@ -206,22 +208,46 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     @Override
     public void onClick(View view) {
         if (view instanceof ImageView) {
-            if ("PlayControls".equals(view.getTag())) {
-                animateColorChanges(!mRunning);
-            } else if ("Settings".equals(view.getTag())) {
-                startActivity(new Intent(this, SettingsActivity.class));
-            }
+            String tag = (String) view.getTag();
+            if (tag != null)
+                switch (tag) {
+                    case Constants.QUICK_ACCESS_MENU_PLAY:
+                        animateColorChanges(!mRunning, (ImageView) view);
+                        return;
+                    case Constants.QUICK_ACCESS_MENU_TEXT:
+                        toggleDisplayText((ImageView) view);
+                        return;
+                    case Constants.QUICK_ACCESS_MENU_SETTINGS:
+                        startActivity(new Intent(this, SettingsActivity.class));
+                        return;
+                    default:
+                }
         }
     }
 
-    private void animateColorChanges(boolean shouldAnimate) {
+    private void animateColorChanges(boolean shouldAnimate, ImageView view) {
         if (!shouldAnimate)
-            playControlsImageView.setImageResource(R.drawable.ic_invert_colors_white_24px);
+            view.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
         else {
-            playControlsImageView.setImageResource(R.drawable.ic_invert_colors_off_white_24px);
+            view.setImageResource(R.drawable.ic_pause_circle_filled_black_24dp);
             changeColor();
         }
         mRunning = shouldAnimate;
+        if (AUTO_HIDE) {
+            delayedHide(AUTO_HIDE_DELAY);
+        }
+    }
+
+    private void toggleDisplayText(ImageView view) {
+        boolean isVisible = mDisplayTextView.getVisibility() == View.VISIBLE;
+        if (isVisible) {
+            view.setImageResource(R.drawable.ic_speaker_notes_white_24px);
+            mDisplayTextView.setVisibility(View.INVISIBLE);
+        } else {
+            view.setImageResource(R.drawable.ic_speaker_notes_off_white_24px);
+            mDisplayTextView.setVisibility(View.VISIBLE);
+
+        }
         if (AUTO_HIDE) {
             delayedHide(AUTO_HIDE_DELAY);
         }

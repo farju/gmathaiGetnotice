@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.mgn.get_noticed.GetNoticedApplication;
@@ -85,7 +86,15 @@ public class MainSettingsFragment extends BaseFragment implements AdapterView.On
 
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        input.setSingleLine();
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int margin = getResources().getDimensionPixelSize(R.dimen.default_margin);
+        params.setMargins(margin, margin, margin, margin);
+        input.setLayoutParams(params);
+
+        FrameLayout container = new FrameLayout(context);
+        container.addView(input);
+        builder.setView(container);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -96,6 +105,7 @@ public class MainSettingsFragment extends BaseFragment implements AdapterView.On
                 mAdapter.notifyDataSetChanged();
             }
         });
+        
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

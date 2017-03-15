@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -58,13 +59,25 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1)
-                finish();
-            else
-                getSupportFragmentManager().popBackStackImmediate();
+            manageFragmentBackStack();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            manageFragmentBackStack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
+    private void manageFragmentBackStack() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1)
+            finish();
+        else
+            getSupportFragmentManager().popBackStackImmediate();
+    }
 }
